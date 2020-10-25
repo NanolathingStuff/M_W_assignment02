@@ -25,6 +25,7 @@ import com.example.stepapp.StepAppOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -79,17 +80,21 @@ public class DayFragment extends Fragment {
         // DONE 1: Get the map  number of steps for today
         //  from the database and initialize it to variable stepsByDay
         stepsByDay = StepAppOpenHelper.loadStepsByDay(getContext());
-
-        // TODO 2: Creating a new map that contains the last 5 days?
-        //  number of steps during each day set to 0
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -4); //hopefully -5 days from today
+        Date date = c.getTime();
+        // DONE 2: Creating a new map that contains the last //something already exist,
+        //  number of steps during each day set to 0 //remove current implementation
         Map<String, Integer> graph_map = new TreeMap<>();
-        for(int i = 0; i < 5; i++){
-            graph_map.put(i, 0);
-        }
+        //for(int i = 0; i < 5; i++){
+        //    graph_map.put(new SimpleDateFormat("dd-MM-yyyy").format(date), 0);//reversed date format
+        //    c.add(Calendar.DATE, 1);
+         //   date = c.getTime();
+        //}
 
         // DONE 3: Replace the number of steps for each hour in graph_map
         //  with the number of steps read from the database
-        graph_map.putAll(stepsByDay); //see below
+        graph_map.putAll(stepsByDay); //see below, added automatically cuz calculated in HourFragment
 
         //***** Create column chart using AnyChart library *********/
         // 1. Create and get the cartesian coordinate system for column chart
