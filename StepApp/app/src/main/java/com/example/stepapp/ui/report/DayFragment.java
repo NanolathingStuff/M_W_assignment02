@@ -61,12 +61,6 @@ public class DayFragment extends Fragment {
         anyChartView.setBackgroundColor("#00000000");
         anyChartView.setChart(cartesian);
 
-
-        // Add the number of steps in text view TODO
-        //numStepsTextView = root.findViewById(R.id.numStepsTextView);
-        //todaySteps = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
-        //numStepsTextView.setText(String.valueOf(todaySteps));
-
         return root;
     }
     /**
@@ -78,19 +72,12 @@ public class DayFragment extends Fragment {
     public Cartesian createColumnChart(){
         //***** Read data from SQLiteDatabase *********/
         // DONE 1: Get the map  number of steps for today
-        //  from the database and initialize it to variable stepsByDay
         stepsByDay = StepAppOpenHelper.loadStepsByDay(getContext());
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -4); //hopefully -5 days from today
         Date date = c.getTime();
-        // DONE 2: Creating a new map that contains the last //something already exist,
-        //  number of steps during each day set to 0 //remove current implementation
+
         Map<String, Integer> graph_map = new TreeMap<>();
-        //for(int i = 0; i < 5; i++){
-        //    graph_map.put(new SimpleDateFormat("dd-MM-yyyy").format(date), 0);//reversed date format
-        //    c.add(Calendar.DATE, 1);
-         //   date = c.getTime();
-        //}
 
         // DONE 3: Replace the number of steps for each hour in graph_map
         //  with the number of steps read from the database
@@ -110,13 +97,13 @@ public class DayFragment extends Fragment {
         Column column = cartesian.column(data);
 
         //***** Modify the UI of the chart *********/
-        // DONE 4. Change the color of column chart and its border
+        //Change the color of column chart and its border
         column.fill("#1EB980");
         column.stroke("#1EB980");
 
         //Modifying properties of tooltip
         column.tooltip()
-                .titleFormat("At hour: {%X}")
+                .titleFormat("At day: {%X}")
                 .format("{%Value}{groupsSeparator: } Steps")
                 .anchor(Anchor.RIGHT_TOP);
 
@@ -133,7 +120,7 @@ public class DayFragment extends Fragment {
         cartesian.background().fill("#00000000");
         cartesian.animation(true);
         cartesian.yAxis(0).title("Number of Steps");
-        cartesian.xAxis(0).title("Hour");
+        cartesian.xAxis(0).title("Day");
 
         return cartesian;
     }
